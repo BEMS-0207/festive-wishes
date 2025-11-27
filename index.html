@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christmas Wishes</title>
+    <style>
+        :root {
+            --primary: #c62828;
+            --secondary: #2e7d32;
+            --accent: #ffd54f;
+            --text: #fafafa;
+            --bg: #0d1b2a;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, serif;
+        }
+
+        body {
+            background:linear-gradient(-45deg, #0d1b2a, #1b263b, #1a237e, #4a148c);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Snow Animation */
+        .snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: white;
+            font-size: 1.2rem;
+            opacity: 0.8;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh);
+            }
+        }
+
+        /* Balloons */
+        .balloon {
+            position: fixed;
+            z-index: 0;
+            width: 60px;
+            height: 70px;
+            border-radius: 50%;
+            opacity: 0.7;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .balloon:nth-child(1) {
+            background: radial-gradient(circle at 30% 30%, #ff5252, #b71c1c);
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .balloon:nth-child(2) {
+            background: radial-gradient(circle at 30% 30%, #4caf50, #1b5e20);
+            left: 20%;
+            animation-delay: 1s;
+        }
+
+        .balloon:nth-child(3) {
+            background: radial-gradient(circle at 30% 30%, #2196f3, #0d47a1);
+            left: 30%;
+            animation-delay: 2s;
+        }
+
+        .balloon:nth-child(4) {
+            background: radial-gradient(circle at 30% 30%, #ffeb3b, #f57f17);
+            left: 40%;
+            animation-delay: 3s;
+        }
+
+        .balloon:nth-child(5) {
+            background: radial-gradient(circle at 30% 30%, #ab47bc, #4a148c);
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        .balloon:nth-child(6) {
+            background: radial-gradient(circle at 30% 30%, #ff9800, #e65100);
+            left: 60%;
+            animation-delay: 5s;
+        }
+
+        .balloon:nth-child(7) {
+            background: radial-gradient(circle at 30% 30%, #00bcd4, #006064);
+            left: 70%;
+            animation-delay: 6s;
+        }
+
+        .balloon:nth-child(8) {
+            background: radial-gradient(circle at 30% 30%, #ff4081, #ad1457);
+            left: 80%;
+            animation-delay: 7s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+            }
+            25% {
+                transform: translateY(75vh) translateX(20px);
+            }
+            50% {
+                transform: translateY(50vh) translateX(-15px);
+            }
+            75% {
+                transform: translateY(25vh) translateX(10px);
+            }
+            100% {
+                transform: translateY(-100px) translateX(0);
+            }
+        }
+
+        /* Layout */
+        .container {
+            max-width: 100%;
+            padding: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            text-align: center;
+            padding: 1rem 0 0;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(0.4px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Wish Message */
+        .wish-message {
+            font-size: 1.3rem;
+            text-align: center;
+            padding: 1rem;
+            margin: 1rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .sender-name {
+            color: var(--accent);
+            font-size: 65px;
+            font-family: serif;
+            font-weight:bolder;
+        }
+
+        /* Countdown */
+        .countdown-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .countdown-box {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+        }
+
+        .countdown-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-shadow: 0 0 8px rgba(198, 40, 40, 0.3);
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        /* Real-time Countdown */
+        .real-time-countdown {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .time-unit {
+            text-align: center;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .time-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .time-label {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            margin-top: 0.2rem;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.9rem;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(255, 213, 79, 0.2);
+        }
+
+        .btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Generated Link */
+        .generated-link {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            word-break: break-all;
+            font-size: 0.9rem;
+            display: none;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .link-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .link-text {
+            word-break: break-all;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .link-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .link-actions .btn {
+            margin-top: 0;
+            flex: 1;
+        }
+
+        /* Music Controls */
+        .music-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1.5rem 0;
+            gap: 1rem;
+        }
+
+        .music-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .music-info {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-style: italic;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 700px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .countdown-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 1.5rem;
+            }
+            
+            .btn {
+                width: auto;
+                display: inline-flex;
+            }
+            
+            .action-buttons {
+                display: flex;
+                gap: 1rem;
+            }
+            
+            .action-buttons .btn {
+                flex: 1;
+            }
+
+            .real-time-countdown {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1rem;
+            }
+            
+            .time-value {
+                font-size: 2rem;
+            }
+            
+            .time-label {
+                font-size: 0.8rem;
+            }
+
+            .link-container {
+                flex-direction: row;
+                align-items: center;
+            }
+            
+            .link-text {
+                flex: 1;
+            }
+            
+            .link-actions {
+                flex-direction: column;
+                width: 120px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 900px;
+            }
+            
+            .main-content {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+            
+            .wish-section {
+                margin-bottom: 0;
+            }
+        }
+
+        /* Animation for cards */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Decorative elements */
+        .decoration {
+            position: fixed;
+            z-index: 0;
+            opacity: 0.1;
+        }
+
+        .decoration.tree {
+            bottom: 0;
+            left: 10%;
+            font-size: 8rem;
+        }
+
+        .decoration.gift {
+            top: 10%;
+            right: 10%;
+            font-size: 6rem;
+        }
+        
+        /* Autoplay notification */
+        .autoplay-notice {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Snow Animation -->
+    <div class="snow-container" id="snowflakes"></div>
+    
+    <!-- Balloons -->
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+    
+    <!-- Decorative Elements -->
+    <div class="decoration tree">🎄</div>
+    <div class="decoration gift">🎁</div>
+
+    <div class="container">
+        <header>
+            <h1>Christmas Wishes</h1>
+            <p class="subtitle">Spread holiday cheer with personalized Christmas greetings</p>
+        </header>
+
+        <div class="main-content">
+            <section class="card wish-section">
+                <h2 class="card-title">🎄 Your Christmas Wish</h2>
+                <div class="wish-message" id="wishMessage">
+                    Welcome! Share the Christmas spirit with your loved ones.
+                </div>
+                
+                <div class="countdown-container">
+                    <div class="countdown-box">
+                        <div class="countdown-number" id="daysToChristmas">0</div>
+                        <div class="countdown-label">Days to Christmas</div>
+                    </div>
+                    <div class="countdown-box">
+                        <div class="countdown-number" id="daysToNewYear">0</div>
+                        <div class="countdown-label">Days to New Year</div>
+                    </div>
+                </div>
+                
+                <h3 class="card-title" style="margin-top: 1.5rem;">⏱️ Real-time Countdown</h3>
+                <div class="real-time-countdown" id="realTimeChristmas">
+                    <div class="time-unit">
+                        <div class="time-value" id="christmasDays">0</div>
+                        <div class="time-label">Days</div>
+                    </div>
+                    <div class="time-unit">
+                        <div class="time-value" id="christmasHours">0</div>
+                        <div class="time-label">Hours</div>
+                    </div>
+                    <div class="time-unit">
+                        <div class="time-value" id="christmasMinutes">0</div>
+                        <div class="time-label">Minutes</div>
+                    </div>
+                    <div class="time-unit">
+                        <div class="time-value" id="christmasSeconds">0</div>
+                        <div class="time-label">Seconds</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2 class="card-title">✨ Create Your Wish</h2>
+                <p>Enter your name to generate a personalized Christmas wish link</p>
+                
+                <div class="form-group">
+                    <label for="senderName">Your Name</label>
+                    <input type="text" id="senderName" placeholder="Enter your name">
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn" id="generateBtn">
+                        <span>Generate Your Link</span>
+                    </button>
+                
+                </div>
+                
+                <div class="generated-link" id="generatedLink">
+                    <div class="link-container">
+                        <div class="link-text" id="generatedUrlText">Your personalized link will appear here</div>
+                        <div class="link-actions">
+                            <button class="btn btn-secondary" id="copyGeneratedBtn">
+                                <span>Copy</span>
+                            </button> 
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="music-controls">
+            <button class="music-btn" id="playBtn">▶</button>
+            <button class="music-btn" id="pauseBtn">⏸</button>
+            <button class="music-btn" id="stopBtn">⏹</button>
+        </div>
+        <div class="music-info" id="musicInfo">Jingle Bells is playing</div>
+        <div class="autoplay-notice" id="autoplayNotice">
+            If music doesn't play automatically, click anywhere on the page to enable it.
+        </div>
+
+        <footer>
+            <p style="font-style: italic;"> <b>BEMS......</b>Wishing you Merry Christmas and a Prosperous New Year in Advance!</p>
+        </footer>
+    </div>
+
+    <audio id="backgroundMusic" loop>
+        <source src="C:\Users\DELL pc\Desktop\jingle.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Create snowflakes
+        function createSnowflakes() {
+            const snowflakesContainer = document.getElementById('snowflakes');
+            const snowflakeCount = 40;
+            
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                snowflake.innerHTML = '❄';
+                
+                // Random properties for each snowflake
+                const size = Math.random() * 1.2 + 0.5;
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 10 + 5;
+                const opacity = Math.random() * 0.7 + 0.3;
+                
+                snowflake.style.left = `${left}vw`;
+                snowflake.style.fontSize = `${size}em`;
+                snowflake.style.animationDuration = `${animationDuration}s`;
+                snowflake.style.opacity = opacity;
+                snowflake.style.animationDelay = `${Math.random() * 5}s`;
+                
+                snowflakesContainer.appendChild(snowflake);
+            }
+        }
+
+        // Get URL parameters
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('from');
+        }
+
+        // Update wish message based on URL parameter
+        function updateWishMessage() {
+            const senderName = getUrlParams();
+            const wishMessage = document.getElementById('wishMessage');
+            
+            if (senderName) {
+                wishMessage.innerHTML = `<span class="sender-name">${senderName}</span><br> wishes you a Merry Christmas and a prosperous New Year ahead!`;
+            } else {
+                wishMessage.textContent = "Welcome! Share the Christmas spirit with your loved ones.";
+            }
+        }
+
+        // Generate countdowns
+        function updateCountdowns() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            
+            // Christmas countdown
+            const christmas = new Date(currentYear, 11, 25); // December 25
+            if (now > christmas) {
+                christmas.setFullYear(currentYear + 1);
+            }
+            
+            const daysToChristmas = Math.ceil((christmas - now) / (1000 * 60 * 60 * 24));
+            document.getElementById('daysToChristmas').textContent = daysToChristmas;
+            
+            // New Year countdown
+            const newYear = new Date(currentYear + 1, 0, 1); // January 1 next year
+            const daysToNewYear = Math.ceil((newYear - now) / (1000 * 60 * 60 * 24));
+            document.getElementById('daysToNewYear').textContent = daysToNewYear;
+        }
+
+        // Real-time countdown
+        function updateRealTimeCountdown() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            
+            // Christmas countdown
+            const christmas = new Date(currentYear, 11, 25); // December 25
+            if (now > christmas) {
+                christmas.setFullYear(currentYear + 1);
+            }
+            
+            const diff = christmas - now;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('christmasDays').textContent = days;
+            document.getElementById('christmasHours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('christmasMinutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('christmasSeconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+      // Copy text to clipboard with better error handling// Copy text to clipboard with better error handling
+function copyToClipboard(text) {
+    // Try the modern clipboard API first
+    if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text).then(() => {
+            showToast('Link copied to clipboard!');
+            return true;
+        }).catch(err => {
+            console.error('Clipboard API failed:', err);
+            return fallbackCopy(text);
+        });
+    } else {
+        // Fallback for older browsers
+        return fallbackCopy(text);
+    }
+}
+
+// Fallback copy method
+function fallbackCopy(text) {
+    // Create a temporary textarea element
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    
+    // Select and copy
+    textarea.select();
+    textarea.setSelectionRange(0, 99999); // For mobile devices
+    
+    try {
+        const successful = document.execCommand('copy');
+        document.body.removeChild(textarea);
+        
+        if (successful) {
+            showToast('Link copied to clipboard!');
+            return true;
+        } else {
+            showToast('Failed to copy. Please copy manually: ' + text);
+            return false;
+        }
+    } catch (err) {
+        document.body.removeChild(textarea);
+        showToast('Failed to copy. Please copy manually: ' + text);
+        return false;
+    }
+}
+
+// Generate personalized link
+function generateLink() {
+    const senderName = document.getElementById('senderName').value.trim();
+    const generatedLink = document.getElementById('generatedLink');
+    const generatedUrlText = document.getElementById('generatedUrlText');
+    
+    if (senderName) {
+        const baseUrl = window.location.origin + window.location.pathname;
+        const personalizedUrl = `${baseUrl}?from=${encodeURIComponent(senderName)}`;
+        
+        generatedUrlText.textContent = personalizedUrl;
+        generatedLink.style.display = 'block';
+        
+        // Store the URL in a data attribute for the copy button to access
+        generatedUrlText.setAttribute('data-url', personalizedUrl);
+    } else {
+        showToast('Please enter your name first!');
+    }
+}
+
+// Copy generated link
+function copyGeneratedLink() {
+    const generatedUrlText = document.getElementById('generatedUrlText');
+    const urlToCopy = generatedUrlText.getAttribute('data-url') || generatedUrlText.textContent;
+    
+    if (urlToCopy && urlToCopy !== 'Your personalized link will appear here') {
+        copyToClipboard(urlToCopy);
+    } else {
+        showToast('Please generate a link first!');
+    }
+}
+        function setupMusicControls() {
+            const audio = document.getElementById('backgroundMusic');
+            const playBtn = document.getElementById('playBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            const musicInfo = document.getElementById('musicInfo');
+            const autoplayNotice = document.getElementById('autoplayNotice');
+            
+            // Try to autoplay immediately when page loads
+            const playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    // Autoplay started successfully
+                    musicInfo.textContent = "Jingle Bells is playing";
+                    autoplayNotice.style.display = 'none';
+                }).catch(error => {
+                    // Autoplay was prevented, show notice
+                    musicInfo.textContent = "Click play or anywhere on page to start music";
+                    autoplayNotice.style.display = 'block';
+                    console.log("Autoplay prevented:", error);
+                });
+            }
+            
+            // Button controls
+            playBtn.addEventListener('click', () => {
+                audio.play();
+                musicInfo.textContent = "Jingle Bells is playing";
+                autoplayNotice.style.display = 'none';
+            });
+            
+            pauseBtn.addEventListener('click', () => {
+                audio.pause();
+                musicInfo.textContent = "Music paused";
+            });
+            
+            stopBtn.addEventListener('click', () => {
+                audio.pause();
+                audio.currentTime = 0;
+                musicInfo.textContent = "Music stopped";
+            });
+            
+            // Enable audio on any user interaction
+            document.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play().then(() => {
+                        musicInfo.textContent = "Jingle Bells is playing";
+                        autoplayNotice.style.display = 'none';
+                    }).catch(e => {
+                        console.log("Audio play failed:", e);
+                    });
+                }
+            }, { once: true });
+            
+            // Also enable audio on any key press
+            document.addEventListener('keydown', () => {
+                if (audio.paused) {
+                    audio.play().then(() => {
+                        musicInfo.textContent = "Jingle Bells is playing";
+                        autoplayNotice.style.display = 'none';
+                    }).catch(e => {
+                        console.log("Audio play failed:", e);
+                    });
+                }
+            }, { once: true });
+        }
+
+        // Initialize the app
+        function init() {
+            createSnowflakes();
+            updateWishMessage();
+            updateCountdowns();
+            updateRealTimeCountdown();
+            setupMusicControls();
+            
+            // Update countdown every minute
+            setInterval(updateCountdowns, 60000);
+            
+            // Update real-time countdown every second
+            setInterval(updateRealTimeCountdown, 1000);
+            
+            // Set up generate button
+            document.getElementById('generateBtn').addEventListener('click', generateLink);
+
+
+            // Set up copy generated link button
+            document.getElementById('copyGeneratedBtn').addEventListener('click', copyGeneratedLink);
+            
+            // Allow Enter key to generate link
+            document.getElementById('senderName').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    generateLink();
+                }
+            });
+        }
+
+        // Start the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
