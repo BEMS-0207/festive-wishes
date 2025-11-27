@@ -799,74 +799,62 @@
             }
         }
 
-        // Music controls with autoplay
-        function setupMusicControls() {
-            const audio = document.getElementById('backgroundMusic');
-            const playBtn = document.getElementById('playBtn');
-            const pauseBtn = document.getElementById('pauseBtn');
-            const stopBtn = document.getElementById('stopBtn');
-            const musicInfo = document.getElementById('musicInfo');
-            const autoplayNotice = document.getElementById('autoplayNotice');
-            
-            // Try to autoplay immediately when page loads
-            const playPromise = audio.play();
-            
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    // Autoplay started successfully
-                    musicInfo.textContent = "Jingle Bells is playing";
-                    autoplayNotice.style.display = 'none';
-                }).catch(error => {
-                    // Autoplay was prevented, show notice
-                    musicInfo.textContent = "Tap play or anywhere on page to start music";
-                    autoplayNotice.style.display = 'block';
-                    console.log("Autoplay prevented:", error);
-                });
-            }
-            
-            // Button controls
-            playBtn.addEventListener('click', () => {
-                audio.play();
+      // Music controls with autoplay
+function setupMusicControls() {
+    const audio = document.getElementById('backgroundMusic');
+    const playBtn = document.getElementById('playBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const musicInfo = document.getElementById('musicInfo');
+    
+    // Try to autoplay immediately when page loads without showing errors
+    audio.play().catch(() => {
+        // Silent catch - don't show any error messages
+        // Music will start on first user interaction
+    });
+    
+    // Set initial music info
+    musicInfo.textContent = "Jingle Bells is playing";
+    
+    // Button controls
+    playBtn.addEventListener('click', () => {
+        audio.play();
+        musicInfo.textContent = "Jingle Bells is playing";
+    });
+    
+    pauseBtn.addEventListener('click', () => {
+        audio.pause();
+        musicInfo.textContent = "Music paused";
+    });
+    
+    stopBtn.addEventListener('click', () => {
+        audio.pause();
+        audio.currentTime = 0;
+        musicInfo.textContent = "Music stopped";
+    });
+    
+    // Enable audio on any user interaction
+    document.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play().then(() => {
                 musicInfo.textContent = "Jingle Bells is playing";
-                autoplayNotice.style.display = 'none';
+            }).catch(() => {
+                // Silent catch
             });
-            
-            pauseBtn.addEventListener('click', () => {
-                audio.pause();
-                musicInfo.textContent = "Music paused";
-            });
-            
-            stopBtn.addEventListener('click', () => {
-                audio.pause();
-                audio.currentTime = 0;
-                musicInfo.textContent = "Music stopped";
-            });
-            
-            // Enable audio on any user interaction
-            document.addEventListener('click', () => {
-                if (audio.paused) {
-                    audio.play().then(() => {
-                        musicInfo.textContent = "Jingle Bells is playing";
-                        autoplayNotice.style.display = 'none';
-                    }).catch(e => {
-                        console.log("Audio play failed:", e);
-                    });
-                }
-            }, { once: true });
-            
-            // Also enable audio on any key press
-            document.addEventListener('keydown', () => {
-                if (audio.paused) {
-                    audio.play().then(() => {
-                        musicInfo.textContent = "Jingle Bells is playing";
-                        autoplayNotice.style.display = 'none';
-                    }).catch(e => {
-                        console.log("Audio play failed:", e);
-                    });
-                }
-            }, { once: true });
         }
-
+    }, { once: true });
+    
+    // Also enable audio on any key press
+    document.addEventListener('keydown', () => {
+        if (audio.paused) {
+            audio.play().then(() => {
+                musicInfo.textContent = "Jingle Bells is playing";
+            }).catch(() => {
+                // Silent catch
+            });
+        }
+    }, { once: true });
+}
         // Initialize the app
         function init() {
             createSnowflakes();
@@ -900,3 +888,4 @@
     </script>
 </body>
 </html>
+
