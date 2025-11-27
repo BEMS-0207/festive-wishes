@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Christmas Wishes</title>
     <style>
         :root {
@@ -20,16 +20,19 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background:linear-gradient(-45deg, #0d1b2a, #1b263b, #1a237e, #4a148c);
+            background: linear-gradient(-45deg, #0d1b2a, #1b263b, #1a237e, #4a148c);
             background-size: 400% 400%;
             animation: gradientShift 15s ease infinite;
             color: var(--text);
             min-height: 100vh;
             line-height: 1.6;
             overflow-x: hidden;
+            height: 100vh;
+            overflow-y: auto;
         }
 
         @keyframes gradientShift {
@@ -68,8 +71,8 @@
         .balloon {
             position: fixed;
             z-index: 0;
-            width: 60px;
-            height: 70px;
+            width: 40px;
+            height: 50px;
             border-radius: 50%;
             opacity: 0.7;
             filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
@@ -155,21 +158,24 @@
 
         /* Layout */
         .container {
-            max-width: 100%;
-            padding: 1rem;
+            width: 100%;
+            padding: 12px;
             position: relative;
             z-index: 2;
+            max-height: 100vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         header {
             text-align: center;
-            padding: 1rem 0 0;
-            margin-bottom: 1rem;
+            padding: 8px 0 0;
+            margin-bottom: 12px;
         }
 
         h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+            margin-bottom: 6px;
             background: linear-gradient(to right, var(--accent), var(--primary));
             -webkit-background-clip: text;
             background-clip: text;
@@ -178,25 +184,25 @@
         }
 
         .subtitle {
-            font-size: 1rem;
+            font-size: 0.9rem;
             opacity: 0.9;
-            margin-bottom: 1rem;
+            margin-bottom: 12px;
         }
 
         /* Cards */
         .card {
             background: var(--card-bg);
             backdrop-filter: blur(0.4px);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
             box-shadow: var(--shadow);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .card-title {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
             color: var(--accent);
             display: flex;
             align-items: center;
@@ -205,93 +211,101 @@
 
         /* Wish Message */
         .wish-message {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             text-align: center;
-            padding: 1rem;
-            margin: 1rem 0;
+            padding: 12px;
+            margin: 12px 0;
             background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
+            border-radius: 10px;
             border-left: 4px solid var(--primary);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .sender-name {
             color: var(--accent);
-            font-size: 65px;
+            font-size: 2.5rem;
             font-family: serif;
-            font-weight:bolder;
+            font-weight: bolder;
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+            margin-bottom: 8px;
         }
 
         /* Countdown */
         .countdown-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin: 1.5rem 0;
+            gap: 12px;
+            margin: 16px 0;
         }
 
         .countdown-box {
             text-align: center;
-            padding: 1rem;
+            padding: 12px;
             background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
+            border-radius: 10px;
         }
 
         .countdown-number {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: bold;
             color: var(--primary);
             text-shadow: 0 0 8px rgba(198, 40, 40, 0.3);
         }
 
         .countdown-label {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             opacity: 0.8;
-            margin-top: 0.5rem;
+            margin-top: 6px;
         }
 
         /* Real-time Countdown */
         .real-time-countdown {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 0.5rem;
-            margin: 1rem 0;
+            gap: 6px;
+            margin: 12px 0;
         }
 
         .time-unit {
             text-align: center;
-            padding: 0.5rem;
+            padding: 8px;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 8px;
         }
 
         .time-value {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: bold;
             color: var(--accent);
         }
 
         .time-label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             opacity: 0.8;
-            margin-top: 0.2rem;
+            margin-top: 4px;
         }
 
         /* Form Elements */
         .form-group {
-            margin-bottom: 1.2rem;
+            margin-bottom: 16px;
         }
 
         label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 6px;
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         input {
             width: 100%;
-            padding: 0.9rem;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 8px;
             border: none;
             background: rgba(255, 255, 255, 0.1);
             color: white;
@@ -309,23 +323,24 @@
             background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
             border: none;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
+            padding: 14px 16px;
+            border-radius: 8px;
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
             width: 100%;
-            margin-top: 0.5rem;
+            margin-top: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            touch-action: manipulation;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        .btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .btn-secondary {
@@ -333,18 +348,18 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .btn-secondary:hover {
+        .btn-secondary:active {
             background: rgba(255, 255, 255, 0.15);
         }
 
         /* Generated Link */
         .generated-link {
-            margin-top: 1.5rem;
-            padding: 1rem;
+            margin-top: 16px;
+            padding: 12px;
             background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
+            border-radius: 8px;
             word-break: break-all;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             display: none;
             border: 1px dashed rgba(255, 255, 255, 0.1);
         }
@@ -352,20 +367,21 @@
         .link-container {
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
+            gap: 10px;
         }
 
         .link-text {
             word-break: break-all;
-            padding: 0.5rem;
+            padding: 8px;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 6px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            overflow-wrap: break-word;
         }
 
         .link-actions {
             display: flex;
-            gap: 0.8rem;
+            gap: 8px;
         }
 
         .link-actions .btn {
@@ -378,121 +394,52 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 1.5rem 0;
-            gap: 1rem;
+            margin: 16px 0;
+            gap: 12px;
         }
 
         .music-btn {
             background: rgba(255, 255, 255, 0.1);
             border: none;
             color: white;
-            width: 50px;
-            height: 50px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
+            touch-action: manipulation;
         }
 
-        .music-btn:hover {
+        .music-btn:active {
             background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         .music-info {
             text-align: center;
-            margin-top: 0.5rem;
+            margin-top: 8px;
             font-style: italic;
             opacity: 0.7;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         /* Footer */
         footer {
             text-align: center;
-            margin-top: 2rem;
-            padding-top: 1.5rem;
+            margin-top: 20px;
+            padding-top: 16px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             opacity: 0.7;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
-        /* Responsive Design */
-        @media (min-width: 768px) {
-            .container {
-                max-width: 700px;
-                margin: 0 auto;
-                padding: 2rem;
-            }
-            
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            .countdown-container {
-                grid-template-columns: 1fr 1fr;
-                gap: 1.5rem;
-            }
-            
-            .btn {
-                width: auto;
-                display: inline-flex;
-            }
-            
-            .action-buttons {
-                display: flex;
-                gap: 1rem;
-            }
-            
-            .action-buttons .btn {
-                flex: 1;
-            }
-
-            .real-time-countdown {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 1rem;
-            }
-            
-            .time-value {
-                font-size: 2rem;
-            }
-            
-            .time-label {
-                font-size: 0.8rem;
-            }
-
-            .link-container {
-                flex-direction: row;
-                align-items: center;
-            }
-            
-            .link-text {
-                flex: 1;
-            }
-            
-            .link-actions {
-                flex-direction: column;
-                width: 120px;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .container {
-                max-width: 900px;
-            }
-            
-            .main-content {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 2rem;
-            }
-            
-            .wish-section {
-                margin-bottom: 0;
-            }
+        /* Remove desktop layouts - keep only mobile */
+        .main-content {
+            display: block;
         }
 
         /* Animation for cards */
@@ -514,42 +461,44 @@
 
         .decoration.tree {
             bottom: 0;
-            left: 10%;
-            font-size: 8rem;
+            left: 5%;
+            font-size: 6rem;
         }
 
         .decoration.gift {
             top: 10%;
-            right: 10%;
-            font-size: 6rem;
+            right: 5%;
+            font-size: 4rem;
         }
         
         /* Autoplay notification */
         .autoplay-notice {
             background: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 8px;
+            border-radius: 6px;
             text-align: center;
-            margin-top: 10px;
-            font-size: 0.9rem;
+            margin-top: 8px;
+            font-size: 0.85rem;
             display: none;
         }
         
         /* Toast notification */
         .toast {
             position: fixed;
-            bottom: 20px;
+            bottom: 16px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--primary);
             color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
+            padding: 10px 16px;
+            border-radius: 6px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             z-index: 1000;
             opacity: 0;
             transition: opacity 0.3s;
+            max-width: 90%;
+            text-align: center;
         }
         
         .toast.show {
@@ -602,7 +551,7 @@
                     </div>
                 </div>
                 
-                <h3 class="card-title" style="margin-top: 1.5rem;">⏱️ Real-time Countdown</h3>
+                <h3 class="card-title" style="margin-top: 16px;">⏱️ Real-time Countdown</h3>
                 <div class="real-time-countdown" id="realTimeChristmas">
                     <div class="time-unit">
                         <div class="time-value" id="christmasDays">0</div>
@@ -636,7 +585,6 @@
                     <button class="btn" id="generateBtn">
                         <span>Generate Your Link</span>
                     </button>
-                
                 </div>
                 
                 <div class="generated-link" id="generatedLink">
@@ -659,7 +607,7 @@
         </div>
         <div class="music-info" id="musicInfo">Jingle Bells is playing</div>
         <div class="autoplay-notice" id="autoplayNotice">
-            If music doesn't play automatically, click anywhere on the page to enable it.
+            If music doesn't play automatically, tap anywhere on the page to enable it.
         </div>
 
         <footer>
@@ -675,7 +623,7 @@
         // Create snowflakes
         function createSnowflakes() {
             const snowflakesContainer = document.getElementById('snowflakes');
-            const snowflakeCount = 40;
+            const snowflakeCount = 30; // Reduced for better performance
             
             for (let i = 0; i < snowflakeCount; i++) {
                 const snowflake = document.createElement('div');
@@ -683,7 +631,7 @@
                 snowflake.innerHTML = '❄';
                 
                 // Random properties for each snowflake
-                const size = Math.random() * 1.2 + 0.5;
+                const size = Math.random() * 1.0 + 0.5;
                 const left = Math.random() * 100;
                 const animationDuration = Math.random() * 10 + 5;
                 const opacity = Math.random() * 0.7 + 0.3;
@@ -710,7 +658,7 @@
             const wishMessage = document.getElementById('wishMessage');
             
             if (senderName) {
-                wishMessage.innerHTML = `<span class="sender-name">${senderName}</span><br> wishes you a Merry Christmas and a prosperous New Year ahead!`;
+                wishMessage.innerHTML = `<span class="sender-name">${senderName}</span> wishes you a Merry Christmas and a prosperous New Year ahead!`;
             } else {
                 wishMessage.textContent = "Welcome! Share the Christmas spirit with your loved ones.";
             }
@@ -771,85 +719,87 @@
             }, 3000);
         }
 
-      // Copy text to clipboard with better error handling// Copy text to clipboard with better error handling
-function copyToClipboard(text) {
-    // Try the modern clipboard API first
-    if (navigator.clipboard && window.isSecureContext) {
-        return navigator.clipboard.writeText(text).then(() => {
-            showToast('Link copied to clipboard!');
-            return true;
-        }).catch(err => {
-            console.error('Clipboard API failed:', err);
-            return fallbackCopy(text);
-        });
-    } else {
-        // Fallback for older browsers
-        return fallbackCopy(text);
-    }
-}
-
-// Fallback copy method
-function fallbackCopy(text) {
-    // Create a temporary textarea element
-    const textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.style.position = 'fixed';
-    textarea.style.opacity = '0';
-    document.body.appendChild(textarea);
-    
-    // Select and copy
-    textarea.select();
-    textarea.setSelectionRange(0, 99999); // For mobile devices
-    
-    try {
-        const successful = document.execCommand('copy');
-        document.body.removeChild(textarea);
-        
-        if (successful) {
-            showToast('Link copied to clipboard!');
-            return true;
-        } else {
-            showToast('Failed to copy. Please copy manually: ' + text);
-            return false;
+        // Copy text to clipboard with better error handling
+        function copyToClipboard(text) {
+            // Try the modern clipboard API first
+            if (navigator.clipboard && window.isSecureContext) {
+                return navigator.clipboard.writeText(text).then(() => {
+                    showToast('Link copied to clipboard!');
+                    return true;
+                }).catch(err => {
+                    console.error('Clipboard API failed:', err);
+                    return fallbackCopy(text);
+                });
+            } else {
+                // Fallback for older browsers
+                return fallbackCopy(text);
+            }
         }
-    } catch (err) {
-        document.body.removeChild(textarea);
-        showToast('Failed to copy. Please copy manually: ' + text);
-        return false;
-    }
-}
 
-// Generate personalized link
-function generateLink() {
-    const senderName = document.getElementById('senderName').value.trim();
-    const generatedLink = document.getElementById('generatedLink');
-    const generatedUrlText = document.getElementById('generatedUrlText');
-    
-    if (senderName) {
-        const baseUrl = window.location.origin + window.location.pathname;
-        const personalizedUrl = `${baseUrl}?from=${encodeURIComponent(senderName)}`;
-        
-        generatedUrlText.textContent = personalizedUrl;
-        generatedLink.style.display = 'block';
-        
-        // Store the URL in a data attribute for the copy button to access
-        generatedUrlText.setAttribute('data-url', personalizedUrl);
-    } else {
-        showToast('Please enter your name first!');
-    }
-}
+        // Fallback copy method
+        function fallbackCopy(text) {
+            // Create a temporary textarea element
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            
+            // Select and copy
+            textarea.select();
+            textarea.setSelectionRange(0, 99999); // For mobile devices
+            
+            try {
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textarea);
+                
+                if (successful) {
+                    showToast('Link copied to clipboard!');
+                    return true;
+                } else {
+                    showToast('Failed to copy. Please copy manually: ' + text);
+                    return false;
+                }
+            } catch (err) {
+                document.body.removeChild(textarea);
+                showToast('Failed to copy. Please copy manually: ' + text);
+                return false;
+            }
+        }
 
-// Copy generated link
-function copyGeneratedLink() {
-    const generatedUrlText = document.getElementById('generatedUrlText');
-    const urlToCopy = generatedUrlText.getAttribute('data-url') || generatedUrlText.textContent;
-    
-    if (urlToCopy && urlToCopy !== 'Your personalized link will appear here') {
-        copyToClipboard(urlToCopy);
-    } else {
-        showToast('Please generate a link first!');
-    }
-}
+        // Generate personalized link
+        function generateLink() {
+            const senderName = document.getElementById('senderName').value.trim();
+            const generatedLink = document.getElementById('generatedLink');
+            const generatedUrlText = document.getElementById('generatedUrlText');
+            
+            if (senderName) {
+                const baseUrl = window.location.origin + window.location.pathname;
+                const personalizedUrl = `${baseUrl}?from=${encodeURIComponent(senderName)}`;
+                
+                generatedUrlText.textContent = personalizedUrl;
+                generatedLink.style.display = 'block';
+                
+                // Store the URL in a data attribute for the copy button to access
+                generatedUrlText.setAttribute('data-url', personalizedUrl);
+            } else {
+                showToast('Please enter your name first!');
+            }
+        }
+
+        // Copy generated link
+        function copyGeneratedLink() {
+            const generatedUrlText = document.getElementById('generatedUrlText');
+            const urlToCopy = generatedUrlText.getAttribute('data-url') || generatedUrlText.textContent;
+            
+            if (urlToCopy && urlToCopy !== 'Your personalized link will appear here') {
+                copyToClipboard(urlToCopy);
+            } else {
+                showToast('Please generate a link first!');
+            }
+        }
+
+        // Music controls with autoplay
         function setupMusicControls() {
             const audio = document.getElementById('backgroundMusic');
             const playBtn = document.getElementById('playBtn');
@@ -868,7 +818,7 @@ function copyGeneratedLink() {
                     autoplayNotice.style.display = 'none';
                 }).catch(error => {
                     // Autoplay was prevented, show notice
-                    musicInfo.textContent = "Click play or anywhere on page to start music";
+                    musicInfo.textContent = "Tap play or anywhere on page to start music";
                     autoplayNotice.style.display = 'block';
                     console.log("Autoplay prevented:", error);
                 });
@@ -934,7 +884,6 @@ function copyGeneratedLink() {
             // Set up generate button
             document.getElementById('generateBtn').addEventListener('click', generateLink);
 
-
             // Set up copy generated link button
             document.getElementById('copyGeneratedBtn').addEventListener('click', copyGeneratedLink);
             
@@ -950,5 +899,4 @@ function copyGeneratedLink() {
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
-
 </html>
