@@ -471,7 +471,18 @@
             font-size: 4rem;
         }
         
-       
+        /* Autoplay notification */
+        .autoplay-notice {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.85rem;
+            display: none;
+        }
+        
         /* Toast notification */
         .toast {
             position: fixed;
@@ -603,7 +614,6 @@
 
     <audio id="backgroundMusic" loop>
         <source src="jingle.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
     </audio>
 
     <script>
@@ -785,82 +795,61 @@
                 showToast('Please generate a link first!');
             }
         }
-// Music controls
+// Music controls with improved autoplay (no interaction listeners)
 function setupMusicControls() {
     const audio = document.getElementById('backgroundMusic');
     const playBtn = document.getElementById('playBtn');
     const pauseBtn = document.getElementById('pauseBtn');
     const stopBtn = document.getElementById('stopBtn');
     const musicInfo = document.getElementById('musicInfo');
+
+    // Hide the autoplay notice if present
     const autoplayNotice = document.getElementById('autoplayNotice');
-    
- 
-    musicInfo.textContent = "Click or Tap anywhere to start the music!";
-    autoplayNotice.style.display = 'block'; 
+    if (autoplayNotice) autoplayNotice.style.display = 'none';
 
-   
-    document.addEventListener('click', () => {
-       
-        audio.play().then(() => {
-          
-            musicInfo.textContent = "Jingle Bells is playing";
-            autoplayNotice.style.display = 'none';
-        }).catch(error => {
-            
-            console.log("Audio play failed on user interaction:", error);
-            musicInfo.textContent = "Could not start music. Try the Play button.";
-        });
-        
-       
-        document.removeEventListener('keydown', keydownHandler);
+    // Configure audio
+    audio.muted = false;
+    audio.volume = 0.7;
+    audio.preload = 'auto';
 
-    }, { once: true });
-    
-   
-    const keydownHandler = () => {
-        // If music is paused, play it
-        if (audio.paused) {
-            audio.play().then(() => {
+    // Attempt autoplay with retries
+    function tryAutoplay(attempt = 1) {
+        audio.play()
+            .then(() => {
                 musicInfo.textContent = "Jingle Bells is playing";
-                autoplayNotice.style.display = 'none';
-            }).catch(e => {
-                console.log("Audio play failed on keydown:", e);
-            });
-            // Remove the click listener, since the music has started
-            document.removeEventListener('click', clickHandler);
-        }
-    };
-    
-   
-    document.addEventListener('keydown', () => {
-         if (audio.paused) { // Only attempt to play if it's not already playing
-             audio.play().then(() => {
-                musicInfo.textContent = "Jingle Bells is playing";
-                autoplayNotice.style.display = 'none';
-            }).catch(e => {
-                console.log("Audio play failed on keydown:", e);
-            });
-        }
-    }, { once: true }); // Use once: true here too for simplicity
+                console.log("Autoplay success on attempt", attempt);
+            })
+            .catch(() => {
+                console.log("Autoplay blocked (attempt", attempt + ")");
 
-  
+                // Try a few more times before giving up
+                if (attempt < 5) {
+                    setTimeout(() => tryAutoplay(attempt + 1), 1000);
+                }
+            });
+    }
+
+    // Start autoplay after a short delay
+    setTimeout(() => tryAutoplay(), 500);
+
+    // Button controls
     playBtn.addEventListener('click', () => {
         audio.play();
         musicInfo.textContent = "Jingle Bells is playing";
-        autoplayNotice.style.display = 'none';
     });
-    
+
     pauseBtn.addEventListener('click', () => {
         audio.pause();
         musicInfo.textContent = "Music paused";
     });
-    
+
     stopBtn.addEventListener('click', () => {
         audio.pause();
         audio.currentTime = 0;
         musicInfo.textContent = "Music stopped";
     });
 }
+
         // Initialize the app
         function init() {
             createSnowflakes();
@@ -894,9 +883,3 @@ function setupMusicControls() {
     </script>
 </body>
 </html>
-
-
-
-
-
-
