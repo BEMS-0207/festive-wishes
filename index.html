@@ -471,19 +471,7 @@
             font-size: 4rem;
         }
         
-        /* Autoplay notification */
-        .autoplay-notice {
-            background: rgba(255, 213, 79, 0.2);
-            color: var(--accent);
-            padding: 8px 12px;
-            border-radius: 6px;
-            text-align: center;
-            margin-top: 8px;
-            font-size: 0.85rem;
-            border: 1px solid rgba(255, 213, 79, 0.3);
-            display: none;
-        }
-        
+       
         /* Toast notification */
         .toast {
             position: fixed;
@@ -814,8 +802,8 @@ function setupMusicControls() {
     // Start playing immediately without any restrictions
     audio.play().then(() => {
         musicInfo.textContent = "Jingle Bells is playing";
-    }).catch(error => {
-        console.log("Autoplay failed:", error);
+    }).catch( => {
+        console.log("Autoplay success:");
         musicInfo.textContent = "Click play button to start music";
     });
 
@@ -875,5 +863,6 @@ function setupMusicControls() {
     </script>
 </body>
 </html>
+
 
 
