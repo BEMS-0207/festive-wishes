@@ -795,92 +795,61 @@
                 showToast('Please generate a link first!');
             }
         }
-// Music controls with reliable autoplay
+// Music controls with improved autoplay (no interaction listeners)
 function setupMusicControls() {
     const audio = document.getElementById('backgroundMusic');
     const playBtn = document.getElementById('playBtn');
     const pauseBtn = document.getElementById('pauseBtn');
     const stopBtn = document.getElementById('stopBtn');
     const musicInfo = document.getElementById('musicInfo');
-    
-    // Hide the autoplay notice
+
+    // Hide the autoplay notice if present
     const autoplayNotice = document.getElementById('autoplayNotice');
-    if (autoplayNotice) {
-        autoplayNotice.style.display = 'none';
-    }
-    
-    // Configure audio for better autoplay
+    if (autoplayNotice) autoplayNotice.style.display = 'none';
+
+    // Configure audio
     audio.muted = false;
     audio.volume = 0.7;
     audio.preload = 'auto';
-    
-    // Function to start music
-    function startMusic() {
-        const playPromise = audio.play();
-        
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                // Success
+
+    // Attempt autoplay with retries
+    function tryAutoplay(attempt = 1) {
+        audio.play()
+            .then(() => {
                 musicInfo.textContent = "Jingle Bells is playing";
-                console.log("Music started successfully");
-            }).catch(error => {
-                console.log("Autoplay blocked:", error);
-                // If autoplay fails, the user can manually click play
-            });
-        }
-    }
-    
-    // Try to start music immediately with multiple attempts
-    function attemptAutoplay() {
-        // First attempt
-        startMusic();
-        
-        // Second attempt after a short delay
-        setTimeout(() => {
-            if (audio.paused) {
-                startMusic();
-            }
-        }, 1000);
-        
-        // Third attempt after page is fully loaded
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                if (audio.paused) {
-                    startMusic();
+                console.log("Autoplay success on attempt", attempt);
+            })
+            .catch(() => {
+                console.log("Autoplay blocked (attempt", attempt + ")");
+
+                // Try a few more times before giving up
+                if (attempt < 5) {
+                    setTimeout(() => tryAutoplay(attempt + 1), 1000);
                 }
-            }, 500);
-        });
+            });
     }
-    
-    // Start autoplay attempts
-    attemptAutoplay();
-    
+
+    // Start autoplay after a short delay
+    setTimeout(() => tryAutoplay(), 500);
+
     // Button controls
     playBtn.addEventListener('click', () => {
         audio.play();
         musicInfo.textContent = "Jingle Bells is playing";
     });
-    
+
     pauseBtn.addEventListener('click', () => {
         audio.pause();
         musicInfo.textContent = "Music paused";
     });
-    
+
     stopBtn.addEventListener('click', () => {
         audio.pause();
         audio.currentTime = 0;
         musicInfo.textContent = "Music stopped";
     });
-    
-    // Simple click handler to start music if it's not playing
-    document.addEventListener('click', () => {
-        if (audio.paused) {
-            audio.play().then(() => {
-                musicInfo.textContent = "Jingle Bells is playing";
-            });
-        }
-    }, { once: true });
 }
+
         // Initialize the app
         function init() {
             createSnowflakes();
@@ -914,6 +883,7 @@ function setupMusicControls() {
     </script>
 </body>
 </html>
+
 
 
 
