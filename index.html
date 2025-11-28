@@ -795,7 +795,7 @@
                 showToast('Please generate a link first!');
             }
         }
-// Music controls with guaranteed autoplay
+// Music controls with reliable autoplay
 function setupMusicControls() {
     const audio = document.getElementById('backgroundMusic');
     const playBtn = document.getElementById('playBtn');
@@ -803,54 +803,57 @@ function setupMusicControls() {
     const stopBtn = document.getElementById('stopBtn');
     const musicInfo = document.getElementById('musicInfo');
     
-    // Set audio to be more aggressive for autoplay
+    // Hide the autoplay notice
+    const autoplayNotice = document.getElementById('autoplayNotice');
+    if (autoplayNotice) {
+        autoplayNotice.style.display = 'none';
+    }
+    
+    // Configure audio for better autoplay
     audio.muted = false;
     audio.volume = 0.7;
     audio.preload = 'auto';
     
-    // Multiple strategies to ensure autoplay works
-    function attemptAutoplay() {
+    // Function to start music
+    function startMusic() {
         const playPromise = audio.play();
         
         if (playPromise !== undefined) {
             playPromise.then(() => {
-                // Success - music is playing
+                // Success
                 musicInfo.textContent = "Jingle Bells is playing";
-                console.log("Music autoplay successful");
+                console.log("Music started successfully");
             }).catch(error => {
-                // If autoplay fails, try again with user interaction
-                console.log("Autoplay blocked, waiting for user interaction");
-                
-                // Enable audio on any user interaction
-                const enableAudio = () => {
-                    audio.play().then(() => {
-                        musicInfo.textContent = "Jingle Bells is playing";
-                        document.removeEventListener('click', enableAudio);
-                        document.removeEventListener('touchstart', enableAudio);
-                        document.removeEventListener('keydown', enableAudio);
-                    }).catch(e => {
-                        console.log("Audio play failed on interaction:", e);
-                    });
-                };
-                
-                document.addEventListener('click', enableAudio, { once: true });
-                document.addEventListener('touchstart', enableAudio, { once: true });
-                document.addEventListener('keydown', enableAudio, { once: true });
+                console.log("Autoplay blocked:", error);
+                // If autoplay fails, the user can manually click play
             });
         }
     }
     
-    // Try autoplay immediately when page loads
-    window.addEventListener('load', () => {
-        setTimeout(attemptAutoplay, 100);
-    });
-    
-    // Also try when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', attemptAutoplay);
-    } else {
-        attemptAutoplay();
+    // Try to start music immediately with multiple attempts
+    function attemptAutoplay() {
+        // First attempt
+        startMusic();
+        
+        // Second attempt after a short delay
+        setTimeout(() => {
+            if (audio.paused) {
+                startMusic();
+            }
+        }, 1000);
+        
+        // Third attempt after page is fully loaded
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                if (audio.paused) {
+                    startMusic();
+                }
+            }, 500);
+        });
     }
+    
+    // Start autoplay attempts
+    attemptAutoplay();
     
     // Button controls
     playBtn.addEventListener('click', () => {
@@ -869,7 +872,7 @@ function setupMusicControls() {
         musicInfo.textContent = "Music stopped";
     });
     
-    // Additional user interaction triggers
+    // Simple click handler to start music if it's not playing
     document.addEventListener('click', () => {
         if (audio.paused) {
             audio.play().then(() => {
@@ -911,6 +914,7 @@ function setupMusicControls() {
     </script>
 </body>
 </html>
+
 
 
 
