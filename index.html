@@ -606,9 +606,6 @@
             <button class="music-btn" id="stopBtn">⏹</button>
         </div>
         <div class="music-info" id="musicInfo">Jingle Bells is playing</div>
-        <div class="autoplay-notice" id="autoplayNotice">
-            If music doesn't play automatically, tap anywhere on the page to enable it.
-        </div>
 
         <footer>
             <p style="font-style: italic;"> <b>BEMS......</b>Wishing you Merry Christmas and a Prosperous New Year in Advance!</p>
@@ -805,12 +802,6 @@ function setupMusicControls() {
     const pauseBtn = document.getElementById('pauseBtn');
     const stopBtn = document.getElementById('stopBtn');
     const musicInfo = document.getElementById('musicInfo');
-    const autoplayNotice = document.getElementById('autoplayNotice');
-    
-    // Remove the autoplay notice entirely since we don't need it
-    if (autoplayNotice) {
-        autoplayNotice.style.display = 'none';
-    }
     
     // Set audio to be more aggressive for autoplay
     audio.muted = false;
@@ -920,5 +911,6 @@ function setupMusicControls() {
     </script>
 </body>
 </html>
+
 
 
