@@ -798,23 +798,68 @@
                 showToast('Please generate a link first!');
             }
         }
-
-      // Music controls with autoplay
+// Music controls with guaranteed autoplay
 function setupMusicControls() {
     const audio = document.getElementById('backgroundMusic');
     const playBtn = document.getElementById('playBtn');
     const pauseBtn = document.getElementById('pauseBtn');
     const stopBtn = document.getElementById('stopBtn');
     const musicInfo = document.getElementById('musicInfo');
+    const autoplayNotice = document.getElementById('autoplayNotice');
     
-    // Try to autoplay immediately when page loads without showing errors
-    audio.play().catch(() => {
-        // Silent catch - don't show any error messages
-        // Music will start on first user interaction
+    // Remove the autoplay notice entirely since we don't need it
+    if (autoplayNotice) {
+        autoplayNotice.style.display = 'none';
+    }
+    
+    // Set audio to be more aggressive for autoplay
+    audio.muted = false;
+    audio.volume = 0.7;
+    audio.preload = 'auto';
+    
+    // Multiple strategies to ensure autoplay works
+    function attemptAutoplay() {
+        const playPromise = audio.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                // Success - music is playing
+                musicInfo.textContent = "Jingle Bells is playing";
+                console.log("Music autoplay successful");
+            }).catch(error => {
+                // If autoplay fails, try again with user interaction
+                console.log("Autoplay blocked, waiting for user interaction");
+                
+                // Enable audio on any user interaction
+                const enableAudio = () => {
+                    audio.play().then(() => {
+                        musicInfo.textContent = "Jingle Bells is playing";
+                        document.removeEventListener('click', enableAudio);
+                        document.removeEventListener('touchstart', enableAudio);
+                        document.removeEventListener('keydown', enableAudio);
+                    }).catch(e => {
+                        console.log("Audio play failed on interaction:", e);
+                    });
+                };
+                
+                document.addEventListener('click', enableAudio, { once: true });
+                document.addEventListener('touchstart', enableAudio, { once: true });
+                document.addEventListener('keydown', enableAudio, { once: true });
+            });
+        }
+    }
+    
+    // Try autoplay immediately when page loads
+    window.addEventListener('load', () => {
+        setTimeout(attemptAutoplay, 100);
     });
     
-    // Set initial music info
-    musicInfo.textContent = "Jingle Bells is playing";
+    // Also try when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', attemptAutoplay);
+    } else {
+        attemptAutoplay();
+    }
     
     // Button controls
     playBtn.addEventListener('click', () => {
@@ -833,24 +878,11 @@ function setupMusicControls() {
         musicInfo.textContent = "Music stopped";
     });
     
-    // Enable audio on any user interaction
+    // Additional user interaction triggers
     document.addEventListener('click', () => {
         if (audio.paused) {
             audio.play().then(() => {
                 musicInfo.textContent = "Jingle Bells is playing";
-            }).catch(() => {
-                // Silent catch
-            });
-        }
-    }, { once: true });
-    
-    // Also enable audio on any key press
-    document.addEventListener('keydown', () => {
-        if (audio.paused) {
-            audio.play().then(() => {
-                musicInfo.textContent = "Jingle Bells is playing";
-            }).catch(() => {
-                // Silent catch
             });
         }
     }, { once: true });
@@ -888,4 +920,5 @@ function setupMusicControls() {
     </script>
 </body>
 </html>
+
 
