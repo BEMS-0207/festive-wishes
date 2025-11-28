@@ -800,23 +800,23 @@ function setupMusicControls() {
 
    
     document.addEventListener('click', () => {
-        // We use a promise to handle modern browser autoplay restrictions
+       
         audio.play().then(() => {
-            // Success: Music started
+          
             musicInfo.textContent = "Jingle Bells is playing";
             autoplayNotice.style.display = 'none';
         }).catch(error => {
-            // Failure: Browser still blocked it (unlikely after a user click)
+            
             console.log("Audio play failed on user interaction:", error);
             musicInfo.textContent = "Could not start music. Try the Play button.";
         });
         
-        // Remove the keydown listener as well, since the music has started
+       
         document.removeEventListener('keydown', keydownHandler);
 
     }, { once: true });
     
-    // Also handle keydown for desktop users (using the same 'once' logic)
+   
     const keydownHandler = () => {
         // If music is paused, play it
         if (audio.paused) {
@@ -843,7 +843,7 @@ function setupMusicControls() {
         }
     }, { once: true }); // Use once: true here too for simplicity
 
-    // --- Button controls (These remain the same for manual control) ---
+  
     playBtn.addEventListener('click', () => {
         audio.play();
         musicInfo.textContent = "Jingle Bells is playing";
@@ -894,6 +894,7 @@ function setupMusicControls() {
     </script>
 </body>
 </html>
+
 
 
 
