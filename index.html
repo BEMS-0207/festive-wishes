@@ -794,14 +794,11 @@ function setupMusicControls() {
     const musicInfo = document.getElementById('musicInfo');
     const autoplayNotice = document.getElementById('autoplayNotice');
     
-    // --- Initial State ---
-    // The music starts paused, and we display a message telling the user to interact.
+ 
     musicInfo.textContent = "Click or Tap anywhere to start the music!";
     autoplayNotice.style.display = 'block'; 
 
-    // --- Core Logic: Start music on the FIRST user interaction ---
-    // This uses the 'click' event which also captures touch events on mobile devices.
-    // The '{ once: true }' option ensures this listener is removed after it runs once.
+   
     document.addEventListener('click', () => {
         // We use a promise to handle modern browser autoplay restrictions
         audio.play().then(() => {
@@ -834,10 +831,7 @@ function setupMusicControls() {
         }
     };
     
-    // Note: We need a named function or a reference to remove a specific listener, 
-    // but the `{ once: true }` option on the 'click' listener above makes it remove itself automatically.
-    // Let's stick with the simpler, self-removing logic for the main click listener.
-    // For keydown, we can reuse the click logic but ensure we don't start it if the click already did.
+   
     document.addEventListener('keydown', () => {
          if (audio.paused) { // Only attempt to play if it's not already playing
              audio.play().then(() => {
@@ -900,6 +894,7 @@ function setupMusicControls() {
     </script>
 </body>
 </html>
+
 
 
 
